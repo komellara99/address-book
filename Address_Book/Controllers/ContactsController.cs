@@ -21,11 +21,17 @@ public class ContactController : ControllerBase
     // }
 
     [HttpGet]
-    public async Task<ActionResult<Contact>> GetAllContacts([FromQuery] string? searchQuery)
+    public async Task<ActionResult<Contact>> GetAllContacts([FromQuery] string? searchQuery, [FromQuery] int page = 1)
     {
+        var pageSize = 5;
         if (string.IsNullOrEmpty(searchQuery))
         {
-            return Ok(await _context.Contacts.Include(c => c.Address).ToListAsync());
+            var all = await _context.Contacts.Include(c => c.Address).ToListAsync();
+            return Ok(new
+            {
+                TotalContacts = all.Count,
+                Contacts = all.Skip((page - 1) * pageSize).Take(pageSize).ToList()
+            });
         }
         
         var searchTerms = searchQuery.ToLower().Split(' ');
@@ -46,7 +52,13 @@ public class ContactController : ControllerBase
             .Include(c => c.Address)
             .ToList();
 
-        return Ok(filteredContacts);
+        var totalContacts = filteredContacts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        return Ok(new
+        {
+            TotalContacts = filteredContacts.Count,
+            Contacts = totalContacts
+        });
        
     }
     

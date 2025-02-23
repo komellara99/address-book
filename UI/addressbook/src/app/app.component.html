@@ -17,6 +17,11 @@
   </div>
   <div class="row">
     <div class="col-6">
+      <div class="pagination mb-3">
+        <button class="btn btn-secondary btn-sm" *ngIf="currentPage > 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+        <span class="p-2">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="btn btn-secondary btn-sm" *ngIf="currentPage < totalPages" (click)="onPageChange(currentPage + 1)">Next</button>
+      </div>
       <div *ngFor="let contact of contacts">
         <div class="contact-item p-3 mb-3 border d-flex align-items-center">
 
@@ -46,6 +51,7 @@
         </div>
       </div>
     </div>
+    
 
 
 

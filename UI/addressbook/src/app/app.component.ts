@@ -24,6 +24,9 @@ export class AppComponent {
 
   addModalOpen = false;
   tryDeleting = false;
+  currentPage: number = 1;
+  totalContacts: number = 0;
+  totalPages: number = 0;
 
   constructor(private http: HttpClient) { }
 
@@ -32,13 +35,23 @@ export class AppComponent {
   }
 
   get_contacts(searchQuery: string = "") {
-    const url = `${this.API}Contact?searchQuery=${searchQuery || ''}`;
-    this.http.get(url).subscribe((res) => {
-      this.contacts = res;
+    const url = `${this.API}Contact?searchQuery=${searchQuery}&page=${this.currentPage}`;
+    this.http.get(url).subscribe((res : any) => {
+      this.contacts = res.contacts;
+      this.totalContacts = res.totalContacts;
+      this.totalPages = Math.floor(this.totalContacts / 5);
+      if (this.totalContacts % 5 !== 0) {
+        this.totalPages++;  
+      }
     })
   }
   onSearch() {
+    this.currentPage = 1;
     this.get_contacts(this.searchQuery);
+  }
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.get_contacts();
   }
 
   delete_contact(id: number) {
