@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook", "addressbook\addressbook.csproj", "{1C79326C-B888-44A7-82F8-C1269A543BFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Address_Book", "Address_Book\Address_Book.csproj", "{1C79326C-B888-44A7-82F8-C1269A543BFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

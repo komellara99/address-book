@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0eed1ab7-8b78-4e52-8dfc-c58b7dbf8eee" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Address_Book/Client/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/Client/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/Client/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/Controllers/AddressesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/Controllers/ContactsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/Data/DataContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/Models/Address.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/Models/Contact.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/Program.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/appsettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/bin/Debug/net9.0/Address_Book.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/bin/Debug/net9.0/Address_Book.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/obj/Debug/net9.0/addressbook.AssemblyInfoInputs.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/obj/Debug/net9.0/addressbook.assets.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/obj/project.packagespec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Address_Book/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook.sln" beforeDir="false" afterPath="$PROJECT_DIR$/addressbook.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/addressbook.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/Address_Book.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/addressbook.http" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/addressbook.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/Debug/net9.0/.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/Debug/net9.0/.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/Debug/net9.0/addressbook.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/Debug/net9.0/addressbook.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/Debug/net9.0/addressbook.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/Debug/net9.0/addressbook.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/Debug/net9.0/addressbook.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/Debug/net9.0/addressbook.GlobalUsings.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/Debug/net9.0/addressbook.GlobalUsings.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/Debug/net9.0/addressbook.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/Debug/net9.0/addressbook.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/Debug/net9.0/addressbook.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/addressbook.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/addressbook.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/addressbook.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/addressbook.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/addressbook.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/addressbook.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Address_Book/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/project.packagespec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/rider.project.model.nuget.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addressbook/obj/rider.project.restore.info" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2tQ6RFhrlcHsA8RTHFhUOpeE2Fk" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0eed1ab7-8b78-4e52-8dfc-c58b7dbf8eee" name="Changes" comment="" />
+      <created>1740271940601</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740271940601</updated>
+      <workItem from="1740271944006" duration="42000" />
+    </task>
+    <servers />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
