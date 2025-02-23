@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  API = "http://localhost:8000/api/";
   title = 'addressbook';
 
   contacts: any = [];
@@ -19,8 +20,6 @@ export class AppComponent {
   newContact: Contact = new Contact(0, '', '', '', new Address('', '', '', '', ''), '', false);
   searchQuery: string = '';
   errorMessage:string = '';
-
-  API = "http://localhost:8000/api/";
 
   addModalOpen = false;
   tryDeleting = false;
@@ -31,10 +30,10 @@ export class AppComponent {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.get_contacts();
+    this.getContacts();
   }
 
-  get_contacts(searchQuery: string = "") {
+  getContacts(searchQuery: string = "") {
     const url = `${this.API}Contact?searchQuery=${searchQuery}&page=${this.currentPage}`;
     this.http.get(url).subscribe((res : any) => {
       this.contacts = res.contacts;
@@ -47,17 +46,17 @@ export class AppComponent {
   }
   onSearch() {
     this.currentPage = 1;
-    this.get_contacts(this.searchQuery);
+    this.getContacts(this.searchQuery);
   }
   onPageChange(page: number) {
     this.currentPage = page;
-    this.get_contacts();
+    this.getContacts();
   }
 
-  delete_contact(id: number) {
+  deleteContact(id: number) {
     this.http.delete(this.API + "Contact/" + id).subscribe((res) => {
       console.log(res);
-      this.get_contacts();
+      this.getContacts();
       this.selectedContact = null;
       this.tryDeleting = false;
       this.closeModal();
@@ -68,7 +67,7 @@ export class AppComponent {
     this.closeAddModal();
   }
 
-  edit_contact() {
+  editContact() {
     if (!this.selectedContact) return;
     var contact = this.selectedContact;
     const updatedContact = {
@@ -81,7 +80,7 @@ export class AppComponent {
     this.http.put(this.API + "Contact/" + contact.id, updatedContact).subscribe({
       next: (res) => {
         contact.isEditing = false;
-        this.get_contacts();
+        this.getContacts();
         this.selectedContact = null;
       },
       error: (err) => {
@@ -95,7 +94,7 @@ export class AppComponent {
     contact.isEditing = true;
   }
 
-  add_contact(contact: Contact) {
+  addContact(contact: Contact) {
     const updatedContact = {
       firstName: contact.firstName,
       lastName: contact.lastName,
@@ -107,7 +106,7 @@ export class AppComponent {
       next: (res) => {
         console.log(res);
         this.closeAddModal();
-        this.get_contacts();
+        this.getContacts();
       },
       error: (err) => {
         if (err.status === 400) {
@@ -117,7 +116,7 @@ export class AppComponent {
     });
   }
 
-  get_contact(id: number) {
+  getContact(id: number) {
     this.http.delete(this.API + "Contact/" + id).subscribe((res) => {
       console.log(res);
     })
@@ -135,7 +134,7 @@ export class AppComponent {
     this.addModalOpen = false;
     this.errorMessage = '';
   }
-  try_delete() {
+  tryDelete() {
     this.tryDeleting = true;
   }
 }

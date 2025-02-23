@@ -170,3 +170,4 @@
 /Users/larakomel/RiderProjects/addressbook/Address_Book/obj/Debug/net9.0/Address_Book.pdb
 /Users/larakomel/RiderProjects/addressbook/Address_Book/obj/Debug/net9.0/Address_Book.genruntimeconfig.cache
 /Users/larakomel/RiderProjects/addressbook/Address_Book/obj/Debug/net9.0/ref/Address_Book.dll
+/Users/larakomel/RiderProjects/addressbook/Address_Book/obj/Debug/net9.0/Address_Book.sourcelink.json

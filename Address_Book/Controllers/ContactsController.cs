@@ -7,126 +7,56 @@ using Microsoft.EntityFrameworkCore;
 [ApiController]
 public class ContactController : ControllerBase
 {
-    private readonly DataContext _context;
+    private readonly IContactService _contactService;
 
-    public ContactController(DataContext context)
+    public ContactController(IContactService contactService)
     {
-        _context = context;
+        _contactService = contactService;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<Contact>>> GetContacts(string search)
-    // {
-    //     
-    // }
-
     [HttpGet]
-    public async Task<ActionResult<Contact>> GetAllContacts([FromQuery] string? searchQuery, [FromQuery] int page = 1)
+    public async Task<ActionResult<Contact>> GetContactsAsync([FromQuery] string? searchQuery, [FromQuery] int page = 1)
     {
-        var pageSize = 5;
-        if (string.IsNullOrEmpty(searchQuery))
-        {
-            var all = await _context.Contacts.Include(c => c.Address).ToListAsync();
-            return Ok(new
-            {
-                TotalContacts = all.Count,
-                Contacts = all.Skip((page - 1) * pageSize).Take(pageSize).ToList()
-            });
-        }
-        
-        var searchTerms = searchQuery.ToLower().Split(' ');
-
-        var filteredContacts = _context.Contacts
-            .Where(c => searchTerms.All(term => 
-                c.FirstName.ToLower().Contains(term) || 
-                c.LastName.ToLower().Contains(term) || 
-                c.PhoneNumber.ToLower().Contains(term) ||
-                (c.Address != null && (
-                    c.Address.Street.ToLower().Contains(term) || 
-                    c.Address.HouseNo.ToLower().Contains(term) || 
-                    c.Address.City.ToLower().Contains(term) || 
-                    c.Address.PostCode.ToLower().Contains(term) || 
-                    c.Address.Country.ToLower().Contains(term)
-                ))
-            ))
-            .Include(c => c.Address)
-            .ToList();
-
-        var totalContacts = filteredContacts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+        var (totalContacts, contacts) = await _contactService.GetContactsAsync(searchQuery, page);
         return Ok(new
         {
-            TotalContacts = filteredContacts.Count,
-            Contacts = totalContacts
+            TotalContacts = totalContacts,
+            Contacts = contacts
         });
        
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<Contact>> GetContact(int id)
+    public async Task<ActionResult<Contact>> GetContactAsync(int id)
     {
-        var contact = await _context.Contacts
-            .Include(contact => contact.Address)
-            .FirstOrDefaultAsync(contact => contact.Id == id);
-
-        if (contact == null)
-        {
-            return NotFound("Contact doesn't exist");
-        }
-        return contact;
-    }
-    
-    [HttpPost]
-    public async Task<IActionResult> CreateContact([FromBody] Contact newContact)
-    {
-        if (await _context.Contacts.AnyAsync(contact => contact.PhoneNumber == newContact.PhoneNumber))
-        {
-            return BadRequest(new { message = "Contact with this phone number already exists." });
-        }
-        if (newContact.Address != null)
-        {
-            _context.Add(newContact.Address);
-            await _context.SaveChangesAsync();
-            newContact.AddressId = newContact.Address.Id;
-        }
-
-        _context.Contacts.Add(newContact);
-        await _context.SaveChangesAsync();
-
-        return Ok(new { message = "Contact was created", contact = newContact });
-    }
-    
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateContact(int id, Contact updatedContact)
-    {
-        if (await _context.Contacts.AnyAsync(contact => contact.PhoneNumber == updatedContact.PhoneNumber))
-        {
-            return BadRequest(new { message = "Contact with this phone number already exists." });
-        }
-        var contact = await _context.Contacts.FindAsync(id);
+        var contact = await _contactService.GetContactByIdAsync(id);
         if (contact == null) return NotFound("Contact doesn't exist");
-
-        contact.FirstName = updatedContact.FirstName;
-        contact.LastName = updatedContact.LastName;
-        contact.PhoneNumber = updatedContact.PhoneNumber;
-        contact.Address = updatedContact.Address;
-
-        await _context.SaveChangesAsync();
         return Ok(contact);
     }
     
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteContact(int id)
+    [HttpPost]
+    public async Task<IActionResult> CreateContactAsync([FromBody] Contact newContact)
     {
-        var contact = await _context.Contacts.Include(c => c.Address).FirstOrDefaultAsync(contact =>contact.Id == id);
-        if (contact == null) return NotFound("Contact doesn't exist");
+        var result = await _contactService.CreateContactAsync(newContact);
+        if (!result.isSuccess) return BadRequest(new { message = result.message });
 
-        if (contact.Address != null)
-        {
-            _context.Addresses.Remove(contact.Address);
-        }
-        _context.Contacts.Remove(contact);
-        await _context.SaveChangesAsync();
+        return Ok(new { message = "Contact was created", contact = result.contact });
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateContactAsync(int id, Contact updatedContact)
+    {
+        var result = await _contactService.UpdateContactAsync(id, updatedContact);
+        if (!result.isSuccess) return BadRequest(new { message = result.message });
+
+        return Ok(new { message = result.message, contact = result.contact });
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteContactAsync(int id)
+    {
+        var isDeleted = await _contactService.DeleteContactAsync(id);
+        if (!isDeleted) return NotFound("Contact doesn't exist");
 
         return Ok(new { message = "Contact was deleted." });
     }
