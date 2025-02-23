@@ -7,107 +7,124 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, HttpClientModule, FormsModule,ReactiveFormsModule ],
+  imports: [RouterOutlet, CommonModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'addressbook';
 
-  contacts:any=[];
+  contacts: any = [];
   selectedContact: Contact | null = null;
-  newContact: Contact = new Contact(0,'', '', '', new Address('', '', '', '', ''),'', false);
+  newContact: Contact = new Contact(0, '', '', '', new Address('', '', '', '', ''), '', false);
   searchQuery: string = '';
+  errorMessage:string = '';
 
   API = "http://localhost:8000/api/";
 
   addModalOpen = false;
   tryDeleting = false;
 
-  constructor(private http:HttpClient){}
+  constructor(private http: HttpClient) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.get_contacts();
   }
 
-  get_contacts(searchQuery: string = ""){
+  get_contacts(searchQuery: string = "") {
     const url = `${this.API}Contact?searchQuery=${searchQuery || ''}`;
-    this.http.get(url).subscribe((res)=>{
+    this.http.get(url).subscribe((res) => {
       this.contacts = res;
     })
   }
   onSearch() {
-    this.get_contacts(this.searchQuery); 
+    this.get_contacts(this.searchQuery);
   }
 
-  delete_contact(id: number){
-     this.http.delete(this.API+"Contact/"+id).subscribe((res)=>{
+  delete_contact(id: number) {
+    this.http.delete(this.API + "Contact/" + id).subscribe((res) => {
       console.log(res);
       this.get_contacts();
-      this.selectedContact = null; 
+      this.selectedContact = null;
       this.tryDeleting = false;
       this.closeModal();
-     })
+    })
   }
   selectContact(contact: Contact) {
-    this.selectedContact = JSON.parse(JSON.stringify(contact)); 
+    this.selectedContact = JSON.parse(JSON.stringify(contact));
     this.closeAddModal();
   }
 
-  edit_contact(){
+  edit_contact() {
     if (!this.selectedContact) return;
     var contact = this.selectedContact;
     const updatedContact = {
       firstName: contact.firstName,
       lastName: contact.lastName,
-      phoneNumber: contact.phoneNumber, 
-      addressId: contact.addressId,     
-      address: contact.address          
+      phoneNumber: contact.phoneNumber,
+      addressId: contact.addressId,
+      address: contact.address
     };
-    this.http.put(this.API+"Contact/"+contact.id, updatedContact).subscribe((res)=>{
-      contact.isEditing = false;
-      this.get_contacts();
-      this.selectedContact = null; 
+    this.http.put(this.API + "Contact/" + contact.id, updatedContact).subscribe({
+      next: (res) => {
+        contact.isEditing = false;
+        this.get_contacts();
+        this.selectedContact = null;
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          this.errorMessage = err.error?.message || "There was an error, check the format of the data, especially phone number.";
+        }
+      }
+    });
+  }
+  editing_contact(contact: any) {
+    contact.isEditing = true;
+  }
+
+  add_contact(contact: Contact) {
+    const updatedContact = {
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      phoneNumber: contact.phoneNumber,
+      address: contact.address
+    };
+  
+    this.http.post(this.API + "Contact", updatedContact).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.closeAddModal();
+        this.get_contacts();
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          this.errorMessage = err.error?.message || "There was an error, check the format of the data.";
+        }
+      }
+    });
+  }
+
+  get_contact(id: number) {
+    this.http.delete(this.API + "Contact/" + id).subscribe((res) => {
       console.log(res);
     })
- }
- editing_contact(contact: any) {
-  contact.isEditing = true;  
-}
+  }
+  closeModal() {
+    this.selectedContact = null;
+  }
+  openAddModal() {
+    this.closeModal();
+    this.addModalOpen = true;
+    this.newContact = new Contact(0, '', '', '', new Address('', '', '', '', ''), '', false);
+  }
 
- add_contact(contact: Contact){
-  const updatedContact = {
-    firstName: contact.firstName,
-    lastName: contact.lastName,
-    phoneNumber: contact.phoneNumber,    
-    address: contact.address          
-  };
-  this.http.post(this.API+"Contact", updatedContact).subscribe((res)=>{
-   console.log(res);
-   this.closeAddModal();
-   this.get_contacts();
-  })
-}
-get_contact(id: number){
-  this.http.delete(this.API+"Contact/"+id).subscribe((res)=>{
-   console.log(res);
-  })
-}
-closeModal() {
-  this.selectedContact = null;
-}
-openAddModal() {
-  this.closeModal();
-  this.addModalOpen = true;
-  this.newContact = new Contact(0,'', '', '', new Address('', '', '', '', ''),'', false);
-}
-
-closeAddModal() {
-  this.addModalOpen = false;
-}
-try_delete(){
-  this.tryDeleting = true;
-}
+  closeAddModal() {
+    this.addModalOpen = false;
+    this.errorMessage = '';
+  }
+  try_delete() {
+    this.tryDeleting = true;
+  }
 }
 
 
@@ -136,7 +153,7 @@ export class Contact {
   addressId: string;
   isEditing: boolean
 
-  constructor(id:number, firstName: string, lastName: string, phoneNumber: string, address: Address, addressId:string, isEditing: boolean) {
+  constructor(id: number, firstName: string, lastName: string, phoneNumber: string, address: Address, addressId: string, isEditing: boolean) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

@@ -55,12 +55,12 @@
         <div class="modal-dialog">
           <div class="modal-content p-4">
             <h3>Edit Contact</h3>
-            <form (ngSubmit)="edit_contact()">
+            <form #contactForm="ngForm" (ngSubmit)="edit_contact()">
 
               <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">First Name:</label>
                 <div class="col-sm-9">
-                  <input class="form-control" [(ngModel)]="selectedContact.firstName" name="firstName" required />
+                  <input class="form-control" [(ngModel)]="selectedContact.firstName" name="firstName" required/>
                 </div>
               </div>
 
@@ -112,13 +112,15 @@
                   <input class="form-control" [(ngModel)]="selectedContact.address.country" name="country" required />
                 </div>
               </div>
-
+              <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+              </div>
               <div class="d-flex justify-content-end gap-2">
                 <button *ngIf="!tryDeleting" type="button" class="btn btn-secondary"
                   (click)="try_delete()">Delete</button>
                 <button *ngIf="tryDeleting" type="button" class="btn btn-secondary"
                   (click)="delete_contact(selectedContact.id); $event.stopPropagation()">Confirm Delete</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid">Save Changes</button>
                 <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
               </div>
             </form>
@@ -130,7 +132,7 @@
         <div class="modal-dialog">
           <div class="modal-content p-4">
             <h3>Add New Contact</h3>
-            <form (ngSubmit)="add_contact(newContact)">
+            <form #contactForm="ngForm" (ngSubmit)="add_contact(newContact)">
 
               <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">First Name:</label>
@@ -187,9 +189,11 @@
                   <input class="form-control" [(ngModel)]="newContact.address.country" name="country" required />
                 </div>
               </div>
-
+              <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+              </div>
               <div class="d-flex justify-content-end gap-2">
-                <button type="submit" class="btn btn-success">Add Contact</button>
+                <button type="submit" class="btn btn-success" [disabled]="contactForm.invalid">Add Contact</button>
                 <button type="button" class="btn btn-secondary" (click)="closeAddModal()">Cancel</button>
               </div>
             </form>

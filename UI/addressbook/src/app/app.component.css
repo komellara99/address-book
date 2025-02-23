@@ -5,14 +5,14 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-  }
-  
-  .contact-item:hover {
+}
+
+.contact-item:hover {
     background-color: #f8f9fa;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .contact-icon {
+}
+
+.contact-icon {
     width: 40px;
     height: 40px;
     background-color: #007bff;
@@ -24,9 +24,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-  }
-  
-  .contact-item p {
+}
+
+.contact-item p {
     margin: 0;
-  }
-  
+}

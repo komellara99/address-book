@@ -28,15 +28,21 @@ public class ContactController : ControllerBase
             return Ok(await _context.Contacts.Include(c => c.Address).ToListAsync());
         }
         
+        var searchTerms = searchQuery.ToLower().Split(' ');
+
         var filteredContacts = _context.Contacts
-            .Where(c => c.FirstName.Contains(searchQuery) || 
-                           c.LastName.Contains(searchQuery) || 
-                           c.PhoneNumber.Contains(searchQuery)|| 
-                           c.Address.Street.Contains(searchQuery) || 
-                           c.Address.HouseNo.Contains(searchQuery) || 
-                           c.Address.City.Contains(searchQuery) || 
-                           c.Address.PostCode.Contains(searchQuery) || 
-                           c.Address.Country.Contains(searchQuery))
+            .Where(c => searchTerms.All(term => 
+                c.FirstName.ToLower().Contains(term) || 
+                c.LastName.ToLower().Contains(term) || 
+                c.PhoneNumber.ToLower().Contains(term) ||
+                (c.Address != null && (
+                    c.Address.Street.ToLower().Contains(term) || 
+                    c.Address.HouseNo.ToLower().Contains(term) || 
+                    c.Address.City.ToLower().Contains(term) || 
+                    c.Address.PostCode.ToLower().Contains(term) || 
+                    c.Address.Country.ToLower().Contains(term)
+                ))
+            ))
             .Include(c => c.Address)
             .ToList();
 
@@ -81,6 +87,10 @@ public class ContactController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateContact(int id, Contact updatedContact)
     {
+        if (await _context.Contacts.AnyAsync(contact => contact.PhoneNumber == updatedContact.PhoneNumber))
+        {
+            return BadRequest(new { message = "Contact with this phone number already exists." });
+        }
         var contact = await _context.Contacts.FindAsync(id);
         if (contact == null) return NotFound("Contact doesn't exist");
 
